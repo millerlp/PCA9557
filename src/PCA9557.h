@@ -134,7 +134,7 @@ __asm volatile ("nop");
 #define PCA9557_h
 
 #include <Arduino.h>
-#include "Wire.h"
+#include <Wire.h>
 
 namespace PCA9557 {
 
