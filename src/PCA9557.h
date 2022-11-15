@@ -43,7 +43,7 @@
     REGISTER 0: INPUT REGIASTER - READ ONLY (0 = LOW / 1 = HIGH)
 *===============================================================================================================*
 
-    DEFAULT (WITH NO EXTENRAL INPUT SIGNAL CONNECTED): 'HIGH' (ALL IO PINS HAVE WEAK PULL-UP RESISTORS)
+    DEFAULT (WITH NO EXTERNAL INPUT SIGNAL CONNECTED): 'HIGH' (ALL IO PINS HAVE WEAK PULL-UP RESISTORS)
  
                                     DEFAULT
     PIN_IO0             BIT 0          1
@@ -56,7 +56,7 @@
 	PIN_IO7             BIT 7          1
 
 *===============================================================================================================*
-    REGISTER 1: OUTPUT REGIASTER - READ / WRITE (0 = LOW / 1 = HIGH)
+    REGISTER 1: OUTPUT REGISTER - READ / WRITE (0 = LOW / 1 = HIGH)
 *===============================================================================================================*
 
                                     DEFAULT
@@ -71,7 +71,7 @@
 
 
 *===============================================================================================================*
-    REGISTER 2: POLARITY REGIASTER - READ / WRITE (0 = NON-INVERTED / 1 = INVERTED)
+    REGISTER 2: POLARITY REGISTER - READ / WRITE (0 = NON-INVERTED / 1 = INVERTED)
 *===============================================================================================================*
 
                                     DEFAULT
