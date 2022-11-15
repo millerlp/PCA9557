@@ -103,7 +103,7 @@ void PCA9557::setMode(PCA9557_pin_t pin, PCA9557_mode_t newMode) {              
  *==============================================================================================================*/
 
 void PCA9557::setMode(PCA9557_mode_t newMode) {                                      // PARAMS: IO_INPUT / IO_OUTPUT
-    setReg(REG_CONFIG, newMode ? ALL_INPUT : ALL_OUTPUT);
+    setReg(REG_CONFIG, newMode ? PCA9557_ALL_INPUT : PCA9557_ALL_OUTPUT);
 }
 
 /*==============================================================================================================*
@@ -119,7 +119,7 @@ void PCA9557::setState(PCA9557_pin_t pin, PCA9557_state_t newState) {           
  *==============================================================================================================*/
 
 void PCA9557::setState(PCA9557_state_t newState) {                                   // PARAMS: IO_LOW / IO_HIGH
-    setReg(REG_OUTPUT, newState ? ALL_HIGH : ALL_LOW);
+    setReg(REG_OUTPUT, newState ? PCA9557_ALL_HIGH : PCA9557_ALL_LOW);
 }
 
 /*==============================================================================================================*
@@ -154,7 +154,7 @@ void PCA9557::setPolarity(PCA9557_polarity_t newPolarity) {                     
     byte polarityVals, polarityMask, polarityNew;
     polarityVals = getReg(REG_POLARITY);
     polarityMask = getReg(REG_CONFIG);
-    polarityNew  = newPolarity ? ALL_INVERTED : ALL_NON_INVERTED;
+    polarityNew  = newPolarity ? PCA9557_ALL_INVERTED : PCA9557_ALL_NON_INVERTED;
     setReg(REG_POLARITY, (polarityVals & ~polarityMask) | (polarityNew & polarityMask));
 }
 
@@ -178,9 +178,9 @@ byte PCA9557::getReg(PCA9557_reg_ptr_t regPtr) {
     byte regData = 0;
     initCall(regPtr);
     endCall();
-    if (_comBuffer == COM_SUCCESS) {
-        Wire.requestFrom(DEV_ADDR, NUM_BYTES);
-        if (Wire.available() == NUM_BYTES) regData = Wire.read();
+    if (_comBuffer == PCA9557_COM_SUCCESS) {
+        Wire.requestFrom(PCA9557_DEV_ADDR, PCA9557_NUM_BYTES);
+        if (Wire.available() == PCA9557_NUM_BYTES) regData = Wire.read();
         else {
             while (Wire.available()) Wire.read();
             _comBuffer = ping();
@@ -224,7 +224,7 @@ void PCA9557::setPin(PCA9557_pin_t pin, PCA9557_reg_ptr_t regPtr, byte newSettin
  *==============================================================================================================*/
 
 void PCA9557::initCall(PCA9557_reg_ptr_t regPtr) {
-    Wire.beginTransmission(DEV_ADDR);
+    Wire.beginTransmission(PCA9557_DEV_ADDR);
     Wire.write(regPtr);
 }
 

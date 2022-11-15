@@ -140,15 +140,15 @@ __asm volatile ("nop");
 #include <Wire.h>
 
 
-#define PCA9557_DEV_ADDR         = 0x18;//0b0011000R/W
-#define PCA9557_NUM_BYTES        = 0x01;
-#define PCA9557_ALL_INPUT        = 0xFF;
-#define PCA9557_ALL_OUTPUT       = 0x00;
-#define PCA9557_ALL_LOW          = 0x00;
-#define PCA9557_ALL_NON_INVERTED = 0x00;
-#define PCA9557_ALL_HIGH         = 0xFF;
-#define PCA9557_ALL_INVERTED     = 0xFF;
-#define PCA9557_COM_SUCCESS      = 0x00;
+#define PCA9557_DEV_ADDR          0x18  //0b0011000R/W
+#define PCA9557_NUM_BYTES         0x01
+#define PCA9557_ALL_INPUT         0xFF
+#define PCA9557_ALL_OUTPUT        0x00
+#define PCA9557_ALL_LOW           0x00
+#define PCA9557_ALL_NON_INVERTED  0x00
+#define PCA9557_ALL_HIGH          0xFF
+#define PCA9557_ALL_INVERTED      0xFF
+#define PCA9557_COM_SUCCESS       0x00
 
 typedef enum:byte {
     REG_INPUT    = 0,      // default
