@@ -38,7 +38,8 @@ __asm volatile ("nop");
 #endif
 */
 
-#include <PCA9557.h>
+#include <Wire.h>
+#include "PCA9557.h"
 
 /*==============================================================================================================*
     CONSTRUCTOR
@@ -61,7 +62,7 @@ PCA9557::~PCA9557() {}
 // For meaning of I2C Error Codes see README
 
 byte PCA9557::ping() {
-    Wire.beginTransmission(DEV_ADDR);
+    Wire.beginTransmission(PCA9557_DEV_ADDR);
     return Wire.endTransmission();
 }
 
@@ -69,7 +70,7 @@ byte PCA9557::ping() {
     GET MODE (0 = OUTPUT / 1 = INPUT)
  *==============================================================================================================*/
 
-byte PCA9557::getMode(pin_t pin) {
+byte PCA9557::getMode(PCA9557_pin_t pin) {
     return getPin(pin, REG_CONFIG);
 }
 
@@ -77,7 +78,7 @@ byte PCA9557::getMode(pin_t pin) {
     GET STATE (0 = LOW / 1 = HIGH)
  *==============================================================================================================*/
 
-byte PCA9557::getState(pin_t pin) {
+byte PCA9557::getState(PCA9557_pin_t pin) {
     return getPin(pin, getMode(pin) ? IO_LOW : IO_HIGH);
 }
 
@@ -85,7 +86,7 @@ byte PCA9557::getState(pin_t pin) {
     GET POLARITY: INPUT PINS ONLY (0 = NON-INVERTED / 1 = INVERTED)
  *==============================================================================================================*/
 
-byte PCA9557::getPolarity(pin_t pin) {
+byte PCA9557::getPolarity(PCA9557_pin_t pin) {
     return getPin(pin, REG_POLARITY);
 }
 
@@ -93,7 +94,7 @@ byte PCA9557::getPolarity(pin_t pin) {
     SET MODE
  *==============================================================================================================*/
 
-void PCA9557::setMode(pin_t pin, mode_t newMode) {                           // PARAMS: IO0 / IO1 / IO2 / IO3
+void PCA9557::setMode(PCA9557_pin_t pin, PCA9557_mode_t newMode) {                           // PARAMS: IO0 / IO1 / IO2 / IO3
     setPin(pin, REG_CONFIG, newMode);                                        //         IO_INPUT / IO_OUTPUT
 }
 
@@ -101,7 +102,7 @@ void PCA9557::setMode(pin_t pin, mode_t newMode) {                           // 
     SET MODE : ALL PINS
  *==============================================================================================================*/
 
-void PCA9557::setMode(mode_t newMode) {                                      // PARAMS: IO_INPUT / IO_OUTPUT
+void PCA9557::setMode(PCA9557_mode_t newMode) {                                      // PARAMS: IO_INPUT / IO_OUTPUT
     setReg(REG_CONFIG, newMode ? ALL_INPUT : ALL_OUTPUT);
 }
 
@@ -109,7 +110,7 @@ void PCA9557::setMode(mode_t newMode) {                                      // 
     SET STATE (OUTPUT PINS ONLY)
  *==============================================================================================================*/
 
-void PCA9557::setState(pin_t pin, state_t newState) {                        // PARAMS: IO0 / IO1 / IO2 / IO3
+void PCA9557::setState(PCA9557_pin_t pin, PCA9557_state_t newState) {                        // PARAMS: IO0 / IO1 / IO2 / IO3
     setPin(pin, REG_OUTPUT, newState);                                       //         IO_LOW / IO_HIGH
 }
 
@@ -117,7 +118,7 @@ void PCA9557::setState(pin_t pin, state_t newState) {                        // 
     SET STATE : ALL PINS (OUTPUT PINS ONLY)
  *==============================================================================================================*/
 
-void PCA9557::setState(state_t newState) {                                   // PARAMS: IO_LOW / IO_HIGH
+void PCA9557::setState(PCA9557_state_t newState) {                                   // PARAMS: IO_LOW / IO_HIGH
     setReg(REG_OUTPUT, newState ? ALL_HIGH : ALL_LOW);
 }
 
@@ -125,7 +126,7 @@ void PCA9557::setState(state_t newState) {                                   // 
     TOGGLE STATE (OUTPUT PINS ONLY)
  *==============================================================================================================*/
 
-void PCA9557::toggleState(pin_t pin) {
+void PCA9557::toggleState(PCA9557_pin_t pin) {
     setReg(REG_OUTPUT, getReg(REG_OUTPUT) ^ (1 << pin));
 }
 
@@ -141,7 +142,7 @@ void PCA9557::toggleState() {
     SET POLARITY (INPUT PINS ONLY)
  *==============================================================================================================*/
 
-void PCA9557::setPolarity(pin_t pin, polarity_t newPolarity) {          // PARAMS: IO0 / IO1 / IO2 / IO3
+void PCA9557::setPolarity(PCA9557_pin_t pin, PCA9557_polarity_t newPolarity) {          // PARAMS: IO0 / IO1 / IO2 / IO3
     setPin(pin, REG_POLARITY, newPolarity);                             //         IO_NON_INVERTED / IO_INVERTED
 }
 
@@ -149,7 +150,7 @@ void PCA9557::setPolarity(pin_t pin, polarity_t newPolarity) {          // PARAM
     SET POLARITY : ALL PINS (INPUT PINS ONLY)
  *==============================================================================================================*/
 
-void PCA9557::setPolarity(polarity_t newPolarity) {                     // PARAMS: IO_NON_INVERTED / IO_INVERTED
+void PCA9557::setPolarity(PCA9557_polarity_t newPolarity) {                     // PARAMS: IO_NON_INVERTED / IO_INVERTED
     byte polarityVals, polarityMask, polarityNew;
     polarityVals = getReg(REG_POLARITY);
     polarityMask = getReg(REG_CONFIG);
@@ -173,7 +174,7 @@ void PCA9557::reset() {
     GET REGISTER DATA
  *==============================================================================================================*/
 
-byte PCA9557::getReg(reg_ptr_t regPtr) {
+byte PCA9557::getReg(PCA9557_reg_ptr_t regPtr) {
     byte regData = 0;
     initCall(regPtr);
     endCall();
@@ -192,7 +193,7 @@ byte PCA9557::getReg(reg_ptr_t regPtr) {
     GET PIN DATA
  *==============================================================================================================*/
 
-byte PCA9557::getPin(pin_t pin, reg_ptr_t regPtr) {
+byte PCA9557::getPin(PCA9557_pin_t pin, PCA9557_reg_ptr_t regPtr) {
     return bitRead(getReg(regPtr), pin);
 }
 
@@ -200,7 +201,7 @@ byte PCA9557::getPin(pin_t pin, reg_ptr_t regPtr) {
     SET REGISTER DATA
  *==============================================================================================================*/
 
-void PCA9557::setReg(reg_ptr_t regPtr, byte newSetting) {
+void PCA9557::setReg(PCA9557_reg_ptr_t regPtr, byte newSetting) {
     if (regPtr > 0) {
         initCall(regPtr);
         Wire.write(newSetting);
@@ -212,7 +213,7 @@ void PCA9557::setReg(reg_ptr_t regPtr, byte newSetting) {
     SET PIN DATA
  *==============================================================================================================*/
 
-void PCA9557::setPin(pin_t pin, reg_ptr_t regPtr, byte newSetting) {
+void PCA9557::setPin(PCA9557_pin_t pin, PCA9557_reg_ptr_t regPtr, byte newSetting) {
     byte newReg = getReg(regPtr);
     bitWrite(newReg, pin, newSetting);
     setReg(regPtr, newReg);
@@ -222,7 +223,7 @@ void PCA9557::setPin(pin_t pin, reg_ptr_t regPtr, byte newSetting) {
     INITIATE I2C COMMUNICATION
  *==============================================================================================================*/
 
-void PCA9557::initCall(reg_ptr_t regPtr) {
+void PCA9557::initCall(PCA9557_reg_ptr_t regPtr) {
     Wire.beginTransmission(DEV_ADDR);
     Wire.write(regPtr);
 }

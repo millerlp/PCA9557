@@ -139,80 +139,77 @@ __asm volatile ("nop");
 #include <Arduino.h>
 #include <Wire.h>
 
-namespace PCA9557 {
 
-    const byte DEV_ADDR         = 0x18;//0b0011000R/W
-    const byte NUM_BYTES        = 0x01;
-    const byte ALL_INPUT        = 0xFF;
-    const byte ALL_OUTPUT       = 0x00;
-    const byte ALL_LOW          = 0x00;
-    const byte ALL_NON_INVERTED = 0x00;
-    const byte ALL_HIGH         = 0xFF;
-    const byte ALL_INVERTED     = 0xFF;
-    const byte COM_SUCCESS      = 0x00;
+#define PCA9557_DEV_ADDR         = 0x18;//0b0011000R/W
+#define PCA9557_NUM_BYTES        = 0x01;
+#define PCA9557_ALL_INPUT        = 0xFF;
+#define PCA9557_ALL_OUTPUT       = 0x00;
+#define PCA9557_ALL_LOW          = 0x00;
+#define PCA9557_ALL_NON_INVERTED = 0x00;
+#define PCA9557_ALL_HIGH         = 0xFF;
+#define PCA9557_ALL_INVERTED     = 0xFF;
+#define PCA9557_COM_SUCCESS      = 0x00;
 
-    typedef enum:byte {
-        REG_INPUT    = 0,      // default
-        REG_OUTPUT   = 1,
-        REG_POLARITY = 2,
-        REG_CONFIG   = 3
-    } reg_ptr_t;
+typedef enum:byte {
+    REG_INPUT    = 0,      // default
+    REG_OUTPUT   = 1,
+    REG_POLARITY = 2,
+    REG_CONFIG   = 3
+} PCA9557_reg_ptr_t;
 
-    typedef enum:byte {
-        IO0 = 0,
-        IO1 = 1,
-        IO2 = 2,
-        IO3 = 3,
-		IO4 = 4,
-		IO5 = 5,
-		IO6 = 6,
-		IO7 = 7
-    } pin_t;
+typedef enum:byte {
+    IO0 = 0,
+    IO1 = 1,
+    IO2 = 2,
+    IO3 = 3,
+    IO4 = 4,
+    IO5 = 5,
+    IO6 = 6,
+    IO7 = 7
+} PCA9557_pin_t;
 
-    typedef enum:byte {
-        IO_OUTPUT = 0,
-        IO_INPUT  = 1
-    } mode_t;
+typedef enum:byte {
+    IO_OUTPUT = 0,
+    IO_INPUT  = 1
+} PCA9557_mode_t;
 
-    typedef enum:byte {
-        IO_LOW  = 0,
-        IO_HIGH = 1
-    } state_t;
+typedef enum:byte {
+    IO_LOW  = 0,
+    IO_HIGH = 1
+} PCA9557_state_t;
 
-    typedef enum:byte {
-        IO_NON_INVERTED = 0,
-        IO_INVERTED     = 1
-    } polarity_t;
+typedef enum:byte {
+    IO_NON_INVERTED = 0,
+    IO_INVERTED     = 1
+} PCA9557_polarity_t;
 
-    class PCA9557 {
-         public:
-            PCA9557();
-            ~PCA9557();
-            byte ping();
-            byte getMode(pin_t pin);
-            byte getState(pin_t pin);
-            byte getPolarity(pin_t pin);
-            void setMode(pin_t pin, mode_t newMode);
-            void setMode(mode_t newMode);
-            void setState(pin_t pin, state_t newState);
-            void setState(state_t newState);
-            void toggleState(pin_t pin);
-            void toggleState();
-            void setPolarity(pin_t pin, polarity_t newPolarity);
-            void setPolarity(polarity_t newPolarity);
-            void reset();
-            byte getComResult();
-         private:
-            byte _comBuffer;
-            byte getReg(reg_ptr_t regPtr);
-            byte getPin(pin_t pin, reg_ptr_t regPtr);
-            void setReg(reg_ptr_t ptr, byte newSetting);
-            void setPin(pin_t pin, reg_ptr_t regPtr, byte newSetting);
-            void initCall(reg_ptr_t regPtr);
-            void endCall();
-    };
-}
+class PCA9557 {
+        public:
+        PCA9557();
+        ~PCA9557();
+        byte ping();
+        byte getMode(PCA9557_pin_t pin);
+        byte getState(PCA9557_pin_t pin);
+        byte getPolarity(PCA9557_pin_t pin);
+        void setMode(PCA9557_pin_t pin, PCA9557_mode_t newMode);
+        void setMode(PCA9557_mode_t newMode);
+        void setState(PCA9557_pin_t pin, PCA9557_state_t newState);
+        void setState(PCA9557_state_t newState);
+        void toggleState(PCA9557_pin_t pin);
+        void toggleState();
+        void setPolarity(PCA9557_pin_t pin, PCA9557_polarity_t newPolarity);
+        void setPolarity(PCA9557_polarity_t newPolarity);
+        void reset();
+        byte getComResult();
+        private:
+        byte _comBuffer;
+        byte getReg(PCA9557_reg_ptr_t regPtr);
+        byte getPin(PCA9557_pin_t pin, PCA9557_reg_ptr_t regPtr);
+        void setReg(PCA9557_reg_ptr_t ptr, byte newSetting);
+        void setPin(PCA9557_pin_t pin, PCA9557_reg_ptr_t regPtr, byte newSetting);
+        void initCall(PCA9557_reg_ptr_t regPtr);
+        void endCall();
+};
 
-using namespace PCA9557;
 
 #endif
