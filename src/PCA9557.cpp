@@ -79,7 +79,8 @@ byte PCA9557::getMode(PCA9557_pin_t pin) {
  *==============================================================================================================*/
 
 byte PCA9557::getState(PCA9557_pin_t pin) {
-    return getPin(pin, getMode(pin) ? IO_LOW : IO_HIGH);
+    // return getPin(pin, getMode(pin) ? IO_LOW : IO_HIGH);
+    return getPin(pin, getMode(pin) ? REG_INPUT : REG_OUTPUT);
 }
 
 /*==============================================================================================================*
