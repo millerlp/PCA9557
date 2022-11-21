@@ -1,6 +1,6 @@
 {
 		"name": "PCA9557",
-		"frameworks": "Arduino",
+		"frameworks": "arduino",
 		"keywords": "PCA9557, GPIO, I2C, 8-BIT",
 		"description": "PCA9557 Driver (8-Channel GPIO I2C Expander)",
 		"url": "https://github.com/millerlp/PCA9557",
@@ -8,7 +8,7 @@
 		"authors":
 		[
 			{
-					"name": "Patryk Wagner"
+				"name": "Patryk Wagner"
 			}, 
 			{
 				"name": "Luke Miller",
