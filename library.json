@@ -8,15 +8,14 @@
 		"authors":
 		[
 			{
-					"name": "Patryk Wagner",
-					"maintainer": false
+					"name": "Patryk Wagner"
 			}, 
 			{
 				"name": "Luke Miller",
-				"email": "contact@luke.miller.org",
+				"email": "contact@lukemiller.org",
 				"maintainer": true
 			}
-		]		
+		],		
 		"repository":
 		{
 		    "type": "git",
