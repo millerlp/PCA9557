@@ -6,15 +6,17 @@
 		"url": "https://github.com/millerlp/PCA9557",
 		"downloadUrl": "https://github.com/millerlp/PCA9557/archive/master.zip",
 		"authors":
-		{
-		        "name": "Patryk Wagner",
-		        "maintainer": false
-		}, 
-		{
-			"name": "Luke Miller",
-			"email": "contact@luke.miller.org",
-			"maintainer": true
-			
+		[
+			{
+					"name": "Patryk Wagner",
+					"maintainer": false
+			}, 
+			{
+				"name": "Luke Miller",
+				"email": "contact@luke.miller.org",
+				"maintainer": true
+			}
+		]		
 		"repository":
 		{
 		    "type": "git",
