@@ -24,11 +24,11 @@
     I2C ADDRESS
  *===============================================================================================================*
 
-    The PCA9557 has a single I2C address (factory hardwired):
+    The PCA9557 I2C hardware address with all 3 address pins (A0-A2) pulled to ground is:
  
         PART               DEVICE I2C ADDRESS          PART
        NUMBER          (BIN)      (HEX)     (DEC)     MARKING
-      PCA9557D        01000001     0x41       65      PCA9557
+      PCA9557         01000001     0x41       65      PCA9557
 
 *===============================================================================================================*
     REGISTER POINTERS
@@ -40,14 +40,14 @@
     REG_CONFIG          0x03        // Configuration Register        (R/W)  B00000011
 
 *===============================================================================================================*
-    REGISTER 0: INPUT REGIASTER - READ ONLY (0 = LOW / 1 = HIGH)
+    REGISTER 0: INPUT REGISTER - READ ONLY (0 = LOW / 1 = HIGH)
 *===============================================================================================================*
 
-    DEFAULT (WITH NO EXTERNAL INPUT SIGNAL CONNECTED): 'HIGH' (ALL IO PINS HAVE WEAK PULL-UP RESISTORS)
+    DEFAULT (WITH NO EXTERNAL INPUT SIGNAL CONNECTED): 'HIGH' (ALL IO PINS EXCEPT PIN_IO0 HAVE WEAK PULL-UP RESISTORS)
  
                                     DEFAULT
-    PIN_IO0             BIT 0          1
-    PIN_IO1             BIT 1          1
+    PIN_IO0             BIT 0          1    // Pin 0 (IO0) needs an external pullup resistor since it is open drain
+    PIN_IO1             BIT 1          1    // Other pins do not need pullup resistors
     PIN_IO2             BIT 2          1
     PIN_IO3             BIT 3          1
 	PIN_IO4             BIT 4          1
@@ -60,8 +60,8 @@
 *===============================================================================================================*
 
                                     DEFAULT
-    IO0                 BIT 0          1
-    IO1                 BIT 1          1
+    IO0                 BIT 0          1    
+    IO1                 BIT 1          1    
     IO2                 BIT 2          1
     IO3                 BIT 3          1
 	IO4                 BIT 4          1
